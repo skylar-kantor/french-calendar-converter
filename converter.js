@@ -16,8 +16,6 @@ function getMonthName(month) {
 		case 10: return "Messidor";
 		case 11: return "Thermidor";
 		case 12: return "Fructidor";
-
-			// Jours complémentaires
 		default: return "Jours complémentaires";
 
 	}
@@ -26,7 +24,7 @@ function getMonthName(month) {
 function getDécadeDay(day)
 {
 
-    switch(parseInt(day.toString().slice(-1)))
+    switch(day % 10)
     {
         case 1: return "Primidi"
         case 2: return "Duodi"
@@ -41,41 +39,82 @@ function getDécadeDay(day)
     }
 }
 
-
-const today = new Date(); //set any date
+function convert(y, m, d)
+{
+const today = new Date(y, m-1, d); //set any date
 const today_jdn = today.getJulian(); //get Julian counterpart
 
 const epoch = new Date(1792, 8, 22);
 const epoch_jdn = epoch.getJulian();
-
-const leaps = [0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1];
-var year_len
-if(leaps[today.getFullYear() % 2020] == 0)
-{
-    year_len = 365;
-} else {
-    year_len = 366
-}
-
-
 const jd_diff = today_jdn - epoch_jdn;
-console.log(`There has been ${jd_diff} days between ${epoch} and ${today}`)
-var year = Math.floor(jd_diff/year_len) + 1; //This disregards previous leap years, but is close enough to give us the year number
-console.log(`The year is ${year}`)
-const num_leap_years = Math.floor(year / 4) - 1;
-console.log(`There have been ${num_leap_years } leap years between 1 and ${year}`)
-const day_in_year = jd_diff -  (((year - 1)*year_len) + num_leap_years) // Number of days of all previous years, including the leap days
-console.log(`it is day ${day_in_year} in ${year}`)
-const month = Math.floor(day_in_year / 30) + 1
-const month_name = getMonthName(month)
-var day_in_month;
-if (month_name == "Jours complémentaires") {
+
+const leaps = [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0];
+// Get Year
+var year = 1 + today.getFullYear() - epoch.getFullYear(); // add 1 because the first year is 1 and not 0
+const year_len = leaps[today.getFullYear() - 1] == 1 ? 366 : 365;
+//Get common info for calculations (what day in the year is it)
+var days_to_start_of_year = 0;
+leaps.slice(epoch.getFullYear(), today.getFullYear()).forEach(yr => {days_to_start_of_year += yr == 1 ? 366 : 365});
+var day_of_year = 1 + jd_diff - days_to_start_of_year;
+//Handle mismatch in year after 1/1
+//TODO This is kind of hacky, figure out why we wrap around zero and address that instead of using a bandaid fix like this
+if(day_of_year < 0)
+{
+    day_of_year += 365;
     year -= 1;
-    day_in_month =  day_in_year % 6 + 1
-} else {
-    day_in_month =  day_in_year - 30*(month-1) // Days to end of previous month
 }
-console.log(`It is the month of ${month_name}`)
-console.log(`It is day ${day_in_month} of ${month_name}`)
-const décadeDay = getDécadeDay(day_in_month);
-console.log(`${today} is ${décadeDay} ${day_in_month} ${month_name} ${year}`)
+//Get Month
+var month = Math.floor(day_of_year / 30) + 1; // Add 1 here because months aren't zero indexed
+
+//Get Day
+//Doesn't handle days of year divisible by 30
+//We'll need two cases to handle this, one for the months, one for the complementary days
+//TODO This is also a bit hacky, there's definitely something up with the math
+//The bandaid fix works for now though so I guess I can leave it
+
+// Looks like we may actually need a third case for gregorian months with 31 days
+// Probably should handle that in the actual math because that's....... how months work
+
+const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
+//This doesn't skip days but does cause duplicates
+// Can't address with a one size bandaid because a 31st could be anywhere in the republican month
+var day_of_month = mos_days[today.getMonth() + 1] > 30 ?  day_of_year - 31 * (month - 1) :  (day_of_year - 30 * (month - 1)); 
+
+//Adjust for the last day of the month
+// No longer works (don't remember which change caused this, commit more often)
+// if (day_of_month == 0) {
+//     if(day_of_year == 0) {
+//         day_of_month = year_len == 366 ? 6 : 5;
+//         year -= 1
+//         month = 13;
+//     } else {
+       
+//         day_of_month = 30;
+//         month -= 1;
+//     }
+     
+// }
+//Get month name after adjustment
+const month_name = getMonthName(month);
+return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year};
+}
+
+
+const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
+
+
+//Sept 2030
+for (var d =22; d <= mos_days[9]; d++) {
+console.log(`2030/9/${d} --> ${JSON.stringify(convert(2030,9,d))}`)
+}
+//2030
+for (var m = 10; m < 13; m++)
+{for (var d =1; d <= mos_days[m]; d++) {
+console.log(`2030/${m}/${d} --> ${JSON.stringify(convert(2030,m,d))}`)
+}}
+
+//2031
+for (var m = 1; m < 10; m++)
+{for (var d =1; d <  mos_days[m]; d++) {
+console.log(`2031/${m}/${d} --> ${JSON.stringify(convert(2031,m,d))}`)
+}}
