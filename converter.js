@@ -78,7 +78,13 @@ var month = Math.floor(day_of_year / 30) + 1; // Add 1 here because months aren'
 const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
 //This doesn't skip days but does cause duplicates
 // Can't address with a one size bandaid because a 31st could be anywhere in the republican month
-var day_of_month = mos_days[today.getMonth() + 1] > 30 ?  day_of_year - 31 * (month - 1) :  (day_of_year - 30 * (month - 1)); 
+//Adding this caused some months to start at day 0 and some at day -8
+//var day_of_month = mos_days[today.getMonth() + 1] > 30 ?  day_of_year - 31 * (month - 1) :  (day_of_year - 30 * (month - 1)); 
+var day_of_month = day_of_year - 31 * (month - 1) //This causes all months to start with an increasing number of negative days
+//Adjust for negative days. At least this is easier to bandaid
+
+
+
 
 //Adjust for the last day of the month
 // No longer works (don't remember which change caused this, commit more often)
