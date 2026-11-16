@@ -80,26 +80,28 @@ const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31
 // Can't address with a one size bandaid because a 31st could be anywhere in the republican month
 //Adding this caused some months to start at day 0 and some at day -8
 //var day_of_month = mos_days[today.getMonth() + 1] > 30 ?  day_of_year - 31 * (month - 1) :  (day_of_year - 30 * (month - 1)); 
-var day_of_month = day_of_year - 31 * (month - 1) //This causes all months to start with an increasing number of negative days
-//Adjust for negative days. At least this is easier to bandaid
+var day_of_month = (day_of_year - 31 * (month - 1))//This causes all months to start with an increasing number of negative days.
 
+//Address negative days 
+if (month > 1)
+{
+    day_of_month += month - 1;
+    //Address month start/end issue
 
-
+}
 
 //Adjust for the last day of the month
-// No longer works (don't remember which change caused this, commit more often)
-// if (day_of_month == 0) {
-//     if(day_of_year == 0) {
-//         day_of_month = year_len == 366 ? 6 : 5;
-//         year -= 1
-//         month = 13;
-//     } else {
+if (day_of_month == 0) {
+    if(day_of_year == 0) {
+        day_of_month = year_len == 366 ? 6 : 5;
+        year -= 1
+        month = 13;
+    } else {
        
-//         day_of_month = 30;
-//         month -= 1;
-//     }
-     
-// }
+        day_of_month = 30;
+        month -= 1;
+    }
+}
 //Get month name after adjustment
 const month_name = getMonthName(month);
 return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year};

@@ -14,7 +14,7 @@ DE441_PART_1 = 'https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/d
 DE441_PART_2 = 'https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de441_part-2.bsp'
 ts = load.timescale()
 
-YEAR_RANGE = range(2020, 2040)
+YEAR_RANGE = range(0, 2100)
 
 
 class SeasonEphemeris:
