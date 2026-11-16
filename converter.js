@@ -60,7 +60,7 @@ var day_of_year = 1 + jd_diff - days_to_start_of_year;
 //TODO This is kind of hacky, figure out why we wrap around zero and address that instead of using a bandaid fix like this
 if(day_of_year < 0)
 {
-    day_of_year += 365;
+    day_of_year += year_len;
     year -= 1;
 }
 //Get Month
@@ -102,6 +102,10 @@ if (day_of_month == 0) {
         month -= 1;
     }
 }
+
+// At Jan 1, duplicate day
+
+
 //Get month name after adjustment
 const month_name = getMonthName(month);
 return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year};
