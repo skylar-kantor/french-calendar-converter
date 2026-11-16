@@ -21,9 +21,9 @@ function getMonthName(month) {
 	}
 }
 
-function getDécadeDay(day)
+function getDecadeDay(day, month)
 {
-
+    if (month != 13) {
     switch(day % 10)
     {
         case 1: return "Primidi"
@@ -36,6 +36,15 @@ function getDécadeDay(day)
         case 8: return "Octidi"
         case 9: return "Nonidi"
         case 0: return "Décadi"
+    } } else {
+        switch(day % 10) {
+        case 1: return "La Fête de la Vertu";
+        case 2: return "La Fête du Génie";
+        case 3: return "La Fête du Travail";
+        case 4: return "La Fête de l'Opinion";
+        case 5: return "La Fête des Récompenses";
+        case 6: return "La Fête de la Révolution";
+        }
     }
 }
 
@@ -69,25 +78,14 @@ var month = Math.floor(day_of_year / 30) + 1; // Add 1 here because months aren'
 //Get Day
 //Doesn't handle days of year divisible by 30
 //We'll need two cases to handle this, one for the months, one for the complementary days
+var day_of_month = (day_of_year - 31 * (month - 1))
+
+
 //TODO This is also a bit hacky, there's definitely something up with the math
-//The bandaid fix works for now though so I guess I can leave it
-
-// Looks like we may actually need a third case for gregorian months with 31 days
-// Probably should handle that in the actual math because that's....... how months work
-
-const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
-//This doesn't skip days but does cause duplicates
-// Can't address with a one size bandaid because a 31st could be anywhere in the republican month
-//Adding this caused some months to start at day 0 and some at day -8
-//var day_of_month = mos_days[today.getMonth() + 1] > 30 ?  day_of_year - 31 * (month - 1) :  (day_of_year - 30 * (month - 1)); 
-var day_of_month = (day_of_year - 31 * (month - 1))//This causes all months to start with an increasing number of negative days.
-
 //Address negative days 
 if (month > 1)
 {
     day_of_month += month - 1;
-    //Address month start/end issue
-
 }
 
 //Adjust for the last day of the month
@@ -102,10 +100,6 @@ if (day_of_month == 0) {
         month -= 1;
     }
 }
-
-// At Jan 1, duplicate day
-
-
 //Get month name after adjustment
 const month_name = getMonthName(month);
 return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year};
@@ -113,8 +107,6 @@ return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_y
 
 
 const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
-
-
 //Sept 2030
 for (var d =22; d <= mos_days[9]; d++) {
 console.log(`2030/9/${d} --> ${JSON.stringify(convert(2030,9,d))}`)
