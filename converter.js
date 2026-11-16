@@ -43,7 +43,7 @@ function getDecadeDay(day, month)
         case 3: return "La Fête du Travail";
         case 4: return "La Fête de l'Opinion";
         case 5: return "La Fête des Récompenses";
-        case 6: return "La Fête de la Révolution";
+        case 0: return "La Fête de la Révolution";
         }
     }
 }
@@ -102,23 +102,30 @@ if (day_of_month == 0) {
 }
 //Get month name after adjustment
 const month_name = getMonthName(month);
-return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year};
+const decNum = Math.floor(day_of_year/10) + 1;
+const decadeDay = getDecadeDay(day_of_year, month);
+return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year, "dday": decadeDay, "dnum":decNum};
 }
 
 
 const mos_days = {1:31,2:28,3:31,4:30,5:31,6:30,7:31,8:31,9:30,10:31,11:30,12:31};
 //Sept 2030
 for (var d =22; d <= mos_days[9]; d++) {
-console.log(`2030/9/${d} --> ${JSON.stringify(convert(2030,9,d))}`)
+   const frdate = convert(2030,9,d);
+    console.log(`2030/9/${d} --> Décade ${frdate.dnum} ${frdate.dday} de ${frdate.mname} de l'Année ${frdate.year} de la République`)
+
 }
 //2030
 for (var m = 10; m < 13; m++)
 {for (var d =1; d <= mos_days[m]; d++) {
-console.log(`2030/${m}/${d} --> ${JSON.stringify(convert(2030,m,d))}`)
+    const frdate = convert(2030,m,d);
+    console.log(`2030/${m}/${d} --> Décade ${frdate.dnum} ${frdate.dday} de ${frdate.mname} de l'Année ${frdate.year} de la République`)
 }}
 
 //2031
 for (var m = 1; m < 10; m++)
 {for (var d =1; d <  mos_days[m]; d++) {
-console.log(`2031/${m}/${d} --> ${JSON.stringify(convert(2031,m,d))}`)
+   const frdate = convert(2031,m,d);
+    console.log(`2031/${m}/${d} --> Décade ${frdate.dnum} ${frdate.dday} de ${frdate.mname} de l'Année ${frdate.year} de la République`)
+
 }}
