@@ -102,7 +102,7 @@ if (day_of_month == 0) {
 }
 //Get month name after adjustment
 const month_name = getMonthName(month);
-const decNum = Math.floor(day_of_year/10) + 1;
+const decNum = month == 13 ? 37 : Math.floor(day_of_year/10) + 1; // Adjust for last day of leap year not displaying correctly
 const decadeDay = getDecadeDay(day_of_year, month);
 return {"mname": month_name, "year": year, "day": day_of_month, "yday": day_of_year, "dday": decadeDay, "dnum":decNum};
 }
